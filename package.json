@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "glob": "^10.3.10"
+  },
+  "devDependencies": {
+    "zx": "^7.2.3"
+  }
+}
