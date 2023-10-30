@@ -1,0 +1,31 @@
+# source: https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+tab_width = 4
+trim_trailing_whitespace = true
+# additional properties
+curly_bracket_next_line = false
+spaces_around_operators = true
+
+[*.{md,markdown}]
+# endline with two space parsed to newline
+trim_trailing_whitespace = false
+
+[{*.ts, *.tsx, *.js, *.jsx}]
+indent_size = 4
+indent_style = tab
+# additional properties
+quote_type = single
+
+[{*rc, package.json, tsconfig.json, tsconfig.*}]
+indent_size = 4
+indent_style = tab
+# additional properties
+quote_type = double
+
