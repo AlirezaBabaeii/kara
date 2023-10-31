@@ -13,17 +13,17 @@ trim_trailing_whitespace = true
 curly_bracket_next_line = false
 spaces_around_operators = true
 
-[*.{md,markdown}]
+[**/*.{md,mdx}, **/LICENSE, **/CODEOWNERS]
 # endline with two space parsed to newline
 trim_trailing_whitespace = false
 
-[{*.ts, *.tsx, *.js, *.jsx}]
+[**/*.{js,mjs,cjs,jsx,ts,mts,tsx}]
 indent_size = 4
 indent_style = tab
 # additional properties
 quote_type = single
 
-[{*rc, package.json, tsconfig.json, tsconfig.*}]
+[**/{package.json,tsconfig*,*rc}]
 indent_size = 4
 indent_style = tab
 # additional properties
