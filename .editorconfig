@@ -14,7 +14,7 @@ max_line_length = 100
 curly_bracket_next_line = false
 spaces_around_operators = true
 
-[**/*.{md,mdx}, **/LICENSE, **/CODEOWNERS]
+[**/*.{md,mdx}, **/{*ignore,LICENSE,CODEOWNERS}]
 # endline with two space parsed to newline
 trim_trailing_whitespace = false
 
