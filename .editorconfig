@@ -10,6 +10,7 @@ insert_final_newline = true
 tab_width = 4
 trim_trailing_whitespace = true
 # additional properties
+max_line_length = 100
 curly_bracket_next_line = false
 spaces_around_operators = true
 
@@ -23,7 +24,7 @@ indent_style = tab
 # additional properties
 quote_type = single
 
-[**/{package.json,tsconfig*,*rc}]
+[**/{package.json,tsconfig*,*rc,*.astro}]
 indent_size = 4
 indent_style = tab
 # additional properties
