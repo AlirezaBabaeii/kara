@@ -1,0 +1,6 @@
+{
+	"name": "@wonize/Auth",
+	"version": "1.0.0",
+	"main": "libs/mod.ts",
+	"license": "MIT"
+}
