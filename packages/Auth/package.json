@@ -1,5 +1,5 @@
 {
-	"name": "@wonize/Auth",
+	"name": "@wonize/auth",
 	"version": "1.0.0",
 	"main": "libs/mod.ts",
 	"license": "MIT"
