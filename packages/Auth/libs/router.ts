@@ -1,29 +1,47 @@
-import { RequestHandler, Router } from 'express'
+import { Router, type RequestHandler } from 'express';
 
-const route = Router({ caseSensitive: false })
+const route = Router({ caseSensitive: false });
 
-const forward: RequestHandler = function (_req, _res, next): void {
-	return next()
-}
+const forward: RequestHandler = function forward(_req, _res, next): void {
+	return next();
+};
 
-const Auth = route.all('/auth', forward)
-const AuthLogoutGet = Auth.get('/', forward)
-const AuthLoginPost = Auth.post('/login', forward)
-const AuthRegisterPost = Auth.post('/register', forward)
-const AuthExpirementGet = Auth.get('/expirement', forward)
-const AuthOTPVerificationGet = Auth.get('/otp', forward)
-const ACL = Auth.all('/acl', forward)
-const ACLRequestGet = ACL.get('/:resource/:action', forward)
-const ACLAttributeGet = ACL.get('/:resource', forward)
+const unimplemented: RequestHandler = function unimplmented(_req, res) {
+	res.status(500).send({ message: 'This service is not implemented yet.' }).end();
+};
+
+// Auth
+const Auth = route.all('/auth', forward);
+
+// Authentication
+const AuthLogin = Auth.post('/login', forward);
+const AuthRegister = Auth.post('/register', forward);
+const AuthRefresh = Auth.post('/refresh', forward);
+const AuthLogout = Auth.delete('/', forward);
+const AuthLogoutGet = Auth.get('/logout', forward);
+const AuthChangePassword = Auth.put('/password', forward);
+const AuthVerifyEmail = Auth.get('/verify-email', forward);
+
+// Athorization
+const ACL = Auth.all('/acl', forward);
+const ACLResources = ACL.get('/resources', forward);
+const ACLResourceExist = ACL.get('/:resource', forward);
+const ACLRequestValidation = ACL.get('/:resource/:action', forward);
+
+// Rest
+Auth.all('/*', unimplemented);
 
 export {
 	ACL,
-	ACLAttributeGet,
-	ACLRequestGet,
+	ACLRequestValidation,
+	ACLResourceExist,
+	ACLResources,
 	Auth,
-	AuthExpirementGet,
-	AuthLoginPost,
+	AuthChangePassword,
+	AuthLogin,
+	AuthLogout,
 	AuthLogoutGet,
-	AuthOTPVerificationGet,
-	AuthRegisterPost
-}
+	AuthRefresh,
+	AuthRegister,
+	AuthVerifyEmail,
+};
