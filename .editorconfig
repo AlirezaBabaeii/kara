@@ -14,19 +14,38 @@ max_line_length = 100
 curly_bracket_next_line = false
 spaces_around_operators = true
 
-[**/*.{md,mdx}, **/{*ignore,LICENSE,CODEOWNERS}]
+# documentation, utils
+[**/*.{md,mdx,diff}, **/{*ignore,LICENSE,CODEOWNERS}]
 # endline with two space parsed to newline
 trim_trailing_whitespace = false
 
+# javascript/typescript
 [**/*.{js,mjs,cjs,jsx,ts,mts,tsx}]
 indent_size = 4
 indent_style = tab
 # additional properties
 quote_type = single
 
+# configurations
 [**/{package.json,tsconfig*,*rc,*.astro}]
 indent_size = 4
 indent_style = tab
 # additional properties
 quote_type = double
 
+# golang
+[*.go]
+indent_style = tab
+indent_size = 4
+
+# python
+[*.{ini,py,py.tpl,rst}]
+indent_size = 4
+
+# rust
+[*.rs]
+indent_size = 4
+
+# windows shell scripts
+[*.{cmd,bat,ps1}]
+end_of_line = crlf
