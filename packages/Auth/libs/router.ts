@@ -6,7 +6,7 @@ const forward: RequestHandler = function forward(_req, _res, next): void {
 	return next();
 };
 
-const unimplemented: RequestHandler = function unimplmented(_req, res) {
+const notImplemented: RequestHandler = function unimplmented(_req, res) {
 	res.status(500).send({ message: 'This service is not implemented yet.' }).end();
 };
 
@@ -22,6 +22,12 @@ const AuthLogoutGet = Auth.get('/logout', forward);
 const AuthChangePassword = Auth.put('/password', forward);
 const AuthVerifyEmail = Auth.get('/verify-email', forward);
 
+// OAuth
+const OAuth = Auth.all('/oauth', forward);
+const OAuthGitHub = OAuth.post('/github', notImplemented);
+const OAuthGoogle = OAuth.post('/google', forward);
+const OAuthLinkedIn = OAuth.post('/linkedin', forward);
+
 // Athorization
 const ACL = Auth.all('/acl', forward);
 const ACLResources = ACL.get('/resources', forward);
@@ -29,7 +35,7 @@ const ACLResourceExist = ACL.get('/:resource', forward);
 const ACLRequestValidation = ACL.get('/:resource/:action', forward);
 
 // Rest
-Auth.all('/*', unimplemented);
+Auth.all('/*', notImplemented);
 
 export {
 	ACL,
@@ -44,4 +50,8 @@ export {
 	AuthRefresh,
 	AuthRegister,
 	AuthVerifyEmail,
+	OAuth,
+	OAuthGitHub,
+	OAuthGoogle,
+	OAuthLinkedIn,
 };
