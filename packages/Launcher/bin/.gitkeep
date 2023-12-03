@@ -1,0 +1,4 @@
+type CommandNames = 'injectment' | 'assignment' | string;
+async function main(args: Record<CommandNames, unknown>){
+  // TODO a CLI to invoke with `$ launcher <COMMAND> [OPTION]` command
+}
