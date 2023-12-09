@@ -12,6 +12,14 @@
 	"compilerOptions": {
 		"target": "ESNext",
 		"baseUrl": "./",
-		"esModuleInterop": false
+		"esModuleInterop": false,
+
+		"ignoreDeprecations": "5.0",
+		"isolatedModules": true,
+		"preserveConstEnums": true,
+		"verbatimModuleSyntax": true,
+		"noImplicitUseStrict": false,
+		"checkJs": false,
+		"allowJs": false
 	}
 }
