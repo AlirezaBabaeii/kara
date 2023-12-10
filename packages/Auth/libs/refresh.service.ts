@@ -1,7 +1,8 @@
 // @ts-ignore only-next-line #{ is injectable with `w/launcher` }
 import db from '$libs/db';
-import type { Request, Response } from 'express';
-import * as jwt from 'jsonwebtoken';
+
+import type { Request, Response } from 'npm:@types/express';
+import * as jwt from 'npm:jsonwebtoken';
 
 function AuthRefresh(req: AuthRefreshRequest, res: Response) {
 	if ('token' in req.body && !req.body.token) {
@@ -35,6 +36,6 @@ interface AuthRefreshRequestBody {
 
 interface AuthRefreshRequestParam {}
 
-type AuthRefreshRequest = Request<AuthRefreshRequestParam, {}, AuthRefreshRequestBody>;
+type AuthRefreshRequest = Request<AuthRefreshRequestParam, object, AuthRefreshRequestBody>;
 
 export { AuthRefresh };

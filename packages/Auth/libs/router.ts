@@ -1,4 +1,5 @@
-import { Router, type RequestHandler } from 'express';
+import { type RequestHandler } from 'npm:@types/express';
+import { Router } from 'npm:express';
 
 const route = Router({ caseSensitive: false });
 
