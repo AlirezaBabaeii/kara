@@ -1,14 +1,16 @@
-import { type RequestHandler } from 'npm:@types/express';
-import { Router } from 'npm:express';
+import type { Context, Middleware, Next } from 'https://deno.land/x/oak@v12.6.1/mod.ts';
+import { Router } from 'https://deno.land/x/oak@v12.6.1/router.ts';
 
-const route = Router({ caseSensitive: false });
+const route = new Router({ sensitive: true });
 
-const forward: RequestHandler = function forward(_req, _res, next): void {
+const forward: Middleware = function forward(_context: Context, next: Next): Promise<unknown> {
 	return next();
 };
 
-const notImplemented: RequestHandler = function unimplmented(_req, res) {
-	res.status(500).send({ message: 'This service is not implemented yet.' }).end();
+const notImplemented: Middleware = function unimplmented(context: Context) {
+	context.response.status = 500;
+	context.response.body = { message: 'This service is not implemented yet.' };
+	return;
 };
 
 // Auth

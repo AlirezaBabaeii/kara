@@ -1,5 +1,5 @@
-import { Schema, SchemaTypes, type CallbackError } from 'npm:mongoose';
 import * as crypto from 'node:crypto';
+import { Schema, SchemaTypes, type CallbackError } from 'npm:mongoose';
 
 const CRYPTO_ITERATIONS = 10000;
 const CRYPTO_KEY_LENGTH = 64;
@@ -58,22 +58,24 @@ const AuthLogSchema = new Schema({
 	},
 });
 
+// deno-lint-ignore require-await
 UserSchema.pre('save', async function preSave(next) {
-	const user = this;
-	if (!user.isModified('password')) return next();
+	// this == user
+	if (!this.isModified('password')) return next();
 
 	try {
 		const salt = crypto.randomBytes(16).toString('hex');
 		const hash = crypto
-			.pbkdf2Sync(user.password!, salt, CRYPTO_ITERATIONS, CRYPTO_KEY_LENGTH, CRYPTO_METHOD)
+			.pbkdf2Sync(this.password!, salt, CRYPTO_ITERATIONS, CRYPTO_KEY_LENGTH, CRYPTO_METHOD)
 			.toString('hex');
-		user.password = salt.concat(hash);
+		this.password = salt.concat(hash);
 		next();
 	} catch (error: unknown) {
 		return next(<CallbackError>error);
 	}
 });
 
+// deno-lint-ignore require-await
 UserSchema.methods['comparePassword'] = async function comparePassword(data: string) {
 	const $saved_hashed_password = <string>this['password'];
 	const salt = $saved_hashed_password.substring(0, 32);

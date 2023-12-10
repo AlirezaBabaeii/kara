@@ -1,41 +1,39 @@
-// @ts-ignore only-next-line #{ is injectable with `w/launcher` }
-import db from '$libs/db';
+import db from '$libs/db/mod.ts';
+import * as jwt from 'https://deno.land/x/djwt@v3.0.1/mod.ts';
+import type { Context } from 'https://deno.land/x/oak@v12.6.1/mod.ts';
 
-import type { Request, Response } from 'npm:@types/express';
-import * as jwt from 'npm:jsonwebtoken';
+async function AuthRefresh(context: Context<{ body: { token: string } }>): Promise<unknown> {
+	const req: AuthRefreshRequestBody = await context.request.body({ type: 'json' }).value;
 
-function AuthRefresh(req: AuthRefreshRequest, res: Response) {
-	if ('token' in req.body && !req.body.token) {
-		return res.status(401).json({ message: 'Invalid token' });
+	if ('token' in req && Boolean(req['token']) === false) {
+		context.response.status = 401;
+		context.response.body = { message: 'Invalid token' };
+		return;
 	}
 
-	const decoded = jwt.decode(req.body.token, { complete: true });
-	if (!decoded) {
-		return res.status(401).json({ message: 'Invalid token' });
+	const token = req.token;
+	const decoded = jwt.decode(token);
+	if (Boolean(decoded) === false) {
+		context.response.status = 401;
+		context.response.body = { message: 'Invalid token' };
+		return;
 	}
 
-	const user = db.get(decoded.payload);
-	if (!user) {
-		return res.status(401).json({ message: 'Invalid token' });
+	const payload = decoded[1];
+	const user = db.get(payload);
+	if (Boolean(user) === false) {
+		context.response.status = 401;
+		context.response.body = { message: 'Invalid token' };
+		return;
 	}
 
-	return res.status(200).json(user);
-}
-
-declare module 'http' {
-	interface IncomingHttpHeaders extends AuthIncomingHttpHeaders {}
-}
-
-interface AuthIncomingHttpHeaders {
-	'w-auth-token': string;
+	context.response.status = 200;
+	context.response.body = user;
+	return;
 }
 
 interface AuthRefreshRequestBody {
 	token: string;
 }
-
-interface AuthRefreshRequestParam {}
-
-type AuthRefreshRequest = Request<AuthRefreshRequestParam, object, AuthRefreshRequestBody>;
 
 export { AuthRefresh };
