@@ -1,0 +1,3 @@
+{
+  "exclude": ["**/*.astro", "**/*.json", "node_modules"]
+}
