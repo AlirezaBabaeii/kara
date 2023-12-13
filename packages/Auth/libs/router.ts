@@ -1,16 +1,18 @@
 import type { Context, Middleware, Next } from 'https://deno.land/x/oak@v12.6.1/mod.ts';
-import { Router } from 'https://deno.land/x/oak@v12.6.1/router.ts';
+import { Router, Status } from 'https://deno.land/x/oak@v12.6.1/mod.ts';
 
 const route = new Router({ sensitive: true });
 
-const forward: Middleware = function forward(_context: Context, next: Next): Promise<unknown> {
+const forward: Middleware = function forward(_: Context, next: Next): Promise<unknown> {
 	return next();
 };
 
-const notImplemented: Middleware = function unimplmented(context: Context) {
-	context.response.status = 500;
-	context.response.body = { message: 'This service is not implemented yet.' };
-	return;
+const notImplemented: Middleware = function unimplmented($: Context) {
+	$.response.body = { message: 'This Route Not Implemented Yet!' };
+	$.response.status = Status.NotImplemented;
+	$.response.type = 'application/json';
+	$.response.headers.set('Content-Type', 'application/json');
+	return $;
 };
 
 // Auth
