@@ -1,5 +1,3 @@
 {
-  "deno.enable": true,
-  "deno.lint": true,
-  "deno.unstable": false
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
